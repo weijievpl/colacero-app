@@ -14,6 +14,7 @@ import { PositionTracker } from '@/components/customer/PositionTracker';
 import { WaitEstimate } from '@/components/customer/WaitEstimate';
 import { TurnAlert } from '@/components/customer/TurnAlert';
 import { ServiceStatusBanner } from '@/components/customer/ServiceStatusBanner';
+import { QRCode } from '@/components/mobile/QRCode';
 import { useQueueStore, selectCurrentNumber, selectIsPaused, selectWaitingCount } from '@/lib/store/queueStore';
 import { calculatePosition } from '@/lib/queue/calculatePosition';
 import { msToMinutes } from '@/lib/queue/estimateWait';
@@ -141,7 +142,18 @@ export default function WaitPage() {
           <ServiceStatusBanner status={isPaused ? 'paused' : 'active'} activeLabel={t('wait.statusActive')} pausedLabel={t('wait.statusPaused')} closedLabel={t('wait.statusClosed')} pausedMessage={isPaused ? t('wait.pausedMessage') : undefined} />
           <Card className="border-2 border-primary/20 bg-card/80 backdrop-blur rounded-2xl">
             <CardHeader className="pb-2 text-center"><CardTitle className="text-base text-muted-foreground md:text-lg">{t('wait.yourNumber')}</CardTitle></CardHeader>
-            <CardContent className="pb-6 md:pb-8"><TicketHero number={ticket.number} /></CardContent>
+            <CardContent className="flex flex-col items-center gap-4 pb-6 md:pb-8">
+              <TicketHero number={ticket.number} />
+              {ticket.partySize && ticket.partySize > 1 && (
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                  👥 {ticket.partySize} {locale === 'zh' ? '人' : locale === 'es' ? 'personas' : 'people'}
+                </span>
+              )}
+              <div className="mt-2 rounded-xl border border-border/30 bg-white p-3">
+                <QRCode value={`colacero:${ticket.id}:${ticket.number}`} size={120} />
+              </div>
+              <p className="text-[10px] text-muted-foreground">{locale === 'zh' ? '扫码分享排队状态' : locale === 'es' ? 'Escanea para compartir tu estado' : 'Scan to share your status'}</p>
+            </CardContent>
           </Card>
           <Card className="bg-secondary/30 rounded-2xl">
             <CardContent className="flex items-center justify-between p-4">

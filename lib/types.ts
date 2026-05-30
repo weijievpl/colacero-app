@@ -28,6 +28,7 @@ export interface Ticket {
   name?: string;
   reason?: TicketReason;
   phone?: string;
+  partySize?: number;
   status: TicketStatus;
   joinedAt: Date;
   servedAt?: Date;
@@ -41,6 +42,7 @@ export interface JoinFormData {
   name?: string;
   reason?: TicketReason;
   phone?: string;
+  partySize?: number;
 }
 
 // Business location info

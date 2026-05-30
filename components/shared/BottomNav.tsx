@@ -1,12 +1,13 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { Home, Ticket, BarChart3 } from 'lucide-react';
+import { Home, Ticket, BarChart3, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '', icon: Home, label: 'home' },
   { href: '/join', icon: Ticket, label: 'join' },
+  { href: '/analytics', icon: TrendingUp, label: 'stats' },
   { href: '/dashboard', icon: BarChart3, label: 'admin' },
 ];
 
@@ -30,12 +31,12 @@ export function BottomNav({ locale }: { locale: string }) {
               key={item.label}
               onClick={() => router.push(`/${locale}${item.href}`)}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 w-full h-full min-w-[64px] transition-colors',
+                'flex flex-col items-center justify-center gap-1 w-full h-full min-w-[48px] transition-colors',
                 active ? 'text-primary' : 'text-muted-foreground'
               )}
             >
-              <item.icon className={cn('size-6 transition-transform', active && 'scale-110')} strokeWidth={active ? 2.5 : 2} />
-              <span className="text-[10px] font-medium leading-none">{item.label}</span>
+              <item.icon className={cn('size-5 transition-transform', active && 'scale-110')} strokeWidth={active ? 2.5 : 2} />
+              <span className="text-[9px] font-medium leading-none">{item.label}</span>
             </button>
           );
         })}

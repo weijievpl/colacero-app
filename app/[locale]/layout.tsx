@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Noto_Sans_SC } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BottomNav } from '@/components/shared/BottomNav';
+import { OfflineIndicator } from '@/components/mobile/OfflineIndicator';
 import { LOCALES } from '@/lib/constants';
 import '../globals.css';
 
@@ -90,6 +91,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           storageKey="colacero-theme"
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <OfflineIndicator />
             {children}
             <BottomNav locale={locale} />
           </NextIntlClientProvider>

@@ -40,6 +40,7 @@ export const useQueueStore = create<QueueStore>()(
           name: data.name,
           reason: data.reason,
           phone: data.phone,
+          partySize: data.partySize,
           status: 'waiting',
           joinedAt: new Date(),
           estimatedWaitMs,
