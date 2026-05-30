@@ -1,0 +1,141 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "retry": "Intentar de nuevo",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "back": "Volver",
+    "demo": "Entorno de demostración"
+  },
+  "navigation": {
+    "customer": "Soy cliente",
+    "admin": "Panel de gestión",
+    "language": "Idioma",
+    "theme": "Tema",
+    "analytics": "Analíticas"
+  },
+  "landing": {
+    "hero": "La cola que no se nota",
+    "subtitle": "Obtén tu turno desde el móvil. Sin esperas. Sin papel.",
+    "waitingNow": "Clientes en espera ahora",
+    "serviceActive": "Servicio activo",
+    "servicePaused": "Servicio en pausa",
+    "serviceClosed": "Servicio cerrado"
+  },
+  "join": {
+    "title": "Obtén tu turno",
+    "subtitle": "Sin esperas. Sin papel.",
+    "name": "Nombre (opcional)",
+    "namePlaceholder": "¿Cómo te llamamos?",
+    "reason": "Motivo de la visita",
+    "reasons": {
+      "information": "Información general",
+      "appointment": "Cita previa",
+      "complaint": "Reclamación",
+      "payment": "Pago",
+      "pickup": "Recogida de pedido",
+      "other": "Otro motivo"
+    },
+    "phone": "Teléfono (opcional)",
+    "phonePlaceholder": "+34 600 000 000",
+    "submit": "Obtener mi turno",
+    "submitting": "Registrando...",
+    "privacyNote": "Tus datos solo se usan para gestionar tu turno."
+  },
+  "wait": {
+    "yourNumber": "Tu número",
+    "currentNumber": "Atendiendo ahora",
+    "position": "Posición en la cola",
+    "positionValue": "{position} de {total}",
+    "estimatedWait": "Espera estimada",
+    "estimatedWaitValue": "{minutes} min",
+    "statusActive": "Servicio activo",
+    "statusPaused": "Servicio en pausa",
+    "statusClosed": "Servicio cerrado",
+    "pausedMessage": "El servicio está temporalmente pausado. Volveremos enseguida.",
+    "noWait": "¡Estás a punto!",
+    "youAreNext": "¡Eres el siguiente!",
+    "yourTurn": "¡Es tu turno!",
+    "yourTurnSub": "Dirígete al mostrador ahora.",
+    "dismiss": "Entendido",
+    "served": "Te hemos atendido",
+    "servedSub": "Gracias por tu visita.",
+    "joinAgain": "Sacar otro turno",
+    "backToHome": "Volver al inicio",
+    "local": {
+      "title": "Datos del local",
+      "address": "Dirección",
+      "hours": "Horario",
+      "phone": "Teléfono del negocio",
+      "viewMap": "Ver en Google Maps"
+    }
+  },
+  "admin": {
+    "title": "Panel de gestión",
+    "queue": "Cola activa",
+    "emptyQueue": "No hay clientes en espera",
+    "emptyQueueSub": "Los nuevos clientes aparecerán aquí",
+    "serveNext": "Atender siguiente",
+    "pause": "Pausar servicio",
+    "resume": "Reanudar servicio",
+    "clearQueue": "Vaciar cola",
+    "clearQueueConfirm": "¿Seguro que quieres eliminar todos los tickets en espera?",
+    "clearQueueWarning": "Esta acción no se puede deshacer.",
+    "history": "Historial de atención",
+    "noHistory": "Aún no se ha atendido a nadie",
+    "simulation": "Simulación automática",
+    "simulationOn": "Simulación activa",
+    "simulationOff": "Simulación pausada",
+    "currentlyServing": "Atendiendo ahora",
+    "noCurrentTicket": "Sin clientes",
+    "exportCsv": "Exportar CSV",
+    "metrics": {
+      "waiting": "En espera",
+      "servedToday": "Atendidos hoy",
+      "avgTime": "Tiempo medio",
+      "peakHour": "Hora punta"
+    },
+    "ticket": {
+      "number": "Nº",
+      "name": "Cliente",
+      "anonymous": "Anónimo",
+      "reason": "Motivo",
+      "wait": "Espera",
+      "status": "Estado",
+      "joinedAt": "Entrada",
+      "servedAt": "Atendido",
+      "actions": "Acciones",
+      "cancel": "Cancelar turno",
+      "cancelConfirm": "¿Cancelar este turno?"
+    },
+    "nav": {
+      "queue": "Cola",
+      "metrics": "Métricas",
+      "history": "Historial"
+    }
+  },
+  "analytics": {
+    "title": "Analíticas",
+    "peakChart": "Distribución de clientes por hora",
+    "avgServiceTime": "Evolución del tiempo de atención",
+    "satisfactionEstimate": "Satisfacción estimada",
+    "totalTickets": "Total de tickets hoy"
+  },
+  "errors": {
+    "ticketNotFound": "Este turno no existe o ya ha expirado.",
+    "queueClosed": "El servicio no está disponible en este momento.",
+    "generic": "Algo ha ido mal. Por favor, inténtalo de nuevo."
+  },
+  "notifications": {
+    "enable": "Activar notificaciones",
+    "enabled": "Notificaciones activas",
+    "disabled": "Notificaciones desactivadas",
+    "requestTitle": "¿Activar notificaciones?",
+    "requestMessage": "Te avisaremos cuando sea tu turno.",
+    "turnTitle": "¡Es tu turno!",
+    "turnBody": "{name}, dirígete al mostrador ahora."
+  }
+}

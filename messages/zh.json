@@ -1,0 +1,141 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "retry": "重试",
+    "close": "关闭",
+    "confirm": "确认",
+    "cancel": "取消",
+    "save": "保存",
+    "back": "返回",
+    "demo": "演示环境"
+  },
+  "navigation": {
+    "customer": "我是顾客",
+    "admin": "管理面板",
+    "language": "语言",
+    "theme": "主题",
+    "analytics": "数据分析"
+  },
+  "landing": {
+    "hero": "无感排队",
+    "subtitle": "用手机取号。不用等待。不用纸质票。",
+    "waitingNow": "当前等候人数",
+    "serviceActive": "服务中",
+    "servicePaused": "服务暂停",
+    "serviceClosed": "服务已关闭"
+  },
+  "join": {
+    "title": "取号排队",
+    "subtitle": "不用等待。不用纸质票。",
+    "name": "姓名（选填）",
+    "namePlaceholder": "请问您怎么称呼？",
+    "reason": "来访原因",
+    "reasons": {
+      "information": "咨询服务",
+      "appointment": "预约办理",
+      "complaint": "投诉建议",
+      "payment": "缴费",
+      "pickup": "取件",
+      "other": "其他"
+    },
+    "phone": "电话（选填）",
+    "phonePlaceholder": "+86 138 0000 0000",
+    "submit": "获取号码",
+    "submitting": "正在登记...",
+    "privacyNote": "您的信息仅用于排队管理。"
+  },
+  "wait": {
+    "yourNumber": "您的号码",
+    "currentNumber": "当前叫号",
+    "position": "排队位置",
+    "positionValue": "第 {position} 位，共 {total} 人",
+    "estimatedWait": "预计等待",
+    "estimatedWaitValue": "{minutes} 分钟",
+    "statusActive": "服务中",
+    "statusPaused": "服务暂停",
+    "statusClosed": "服务已关闭",
+    "pausedMessage": "服务暂时暂停。请稍候。",
+    "noWait": "马上轮到您！",
+    "youAreNext": "您是下一位！",
+    "yourTurn": "轮到您了！",
+    "yourTurnSub": "请现在前往柜台。",
+    "dismiss": "知道了",
+    "served": "已为您服务",
+    "servedSub": "感谢您的光临。",
+    "joinAgain": "再次取号",
+    "backToHome": "返回首页",
+    "local": {
+      "title": "网点信息",
+      "address": "地址",
+      "hours": "营业时间",
+      "phone": "联系电话",
+      "viewMap": "在地图中查看"
+    }
+  },
+  "admin": {
+    "title": "管理面板",
+    "queue": "当前队列",
+    "emptyQueue": "暂无等候顾客",
+    "emptyQueueSub": "新顾客将显示在这里",
+    "serveNext": "叫下一位",
+    "pause": "暂停服务",
+    "resume": "恢复服务",
+    "clearQueue": "清空队列",
+    "clearQueueConfirm": "确定要清空所有等候中的号码吗？",
+    "clearQueueWarning": "此操作无法撤销。",
+    "history": "服务记录",
+    "noHistory": "暂无服务记录",
+    "simulation": "自动模拟",
+    "simulationOn": "模拟已开启",
+    "simulationOff": "模拟已暂停",
+    "currentlyServing": "当前叫号",
+    "noCurrentTicket": "暂无顾客",
+    "exportCsv": "导出CSV",
+    "metrics": {
+      "waiting": "等候中",
+      "servedToday": "今日已服务",
+      "avgTime": "平均时长",
+      "peakHour": "高峰时段"
+    },
+    "ticket": {
+      "number": "号码",
+      "name": "顾客",
+      "anonymous": "匿名",
+      "reason": "原因",
+      "wait": "等待",
+      "status": "状态",
+      "joinedAt": "取号时间",
+      "servedAt": "服务时间",
+      "actions": "操作",
+      "cancel": "取消号码",
+      "cancelConfirm": "确定取消此号码？"
+    },
+    "nav": {
+      "queue": "队列",
+      "metrics": "数据",
+      "history": "记录"
+    }
+  },
+  "analytics": {
+    "title": "数据分析",
+    "peakChart": "各时段客流分布",
+    "avgServiceTime": "服务时长变化",
+    "satisfactionEstimate": "满意度估算",
+    "totalTickets": "今日总号数"
+  },
+  "errors": {
+    "ticketNotFound": "此号码不存在或已过期。",
+    "queueClosed": "当前时段暂不提供服务。",
+    "generic": "出错了。请重试。"
+  },
+  "notifications": {
+    "enable": "开启通知",
+    "enabled": "通知已开启",
+    "disabled": "通知已关闭",
+    "requestTitle": "开启通知？",
+    "requestMessage": "轮到您时我们会通知您。",
+    "turnTitle": "轮到您了！",
+    "turnBody": "{name}，请现在前往柜台。"
+  }
+}

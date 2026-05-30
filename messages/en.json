@@ -1,0 +1,141 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "close": "Close",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back",
+    "demo": "Demo environment"
+  },
+  "navigation": {
+    "customer": "I'm a customer",
+    "admin": "Management panel",
+    "language": "Language",
+    "theme": "Theme",
+    "analytics": "Analytics"
+  },
+  "landing": {
+    "hero": "The queue you don't notice",
+    "subtitle": "Get your number from your phone. No waiting. No paper.",
+    "waitingNow": "Customers waiting now",
+    "serviceActive": "Service active",
+    "servicePaused": "Service paused",
+    "serviceClosed": "Service closed"
+  },
+  "join": {
+    "title": "Get your number",
+    "subtitle": "No waiting. No paper.",
+    "name": "Name (optional)",
+    "namePlaceholder": "What should we call you?",
+    "reason": "Reason for visit",
+    "reasons": {
+      "information": "General information",
+      "appointment": "Scheduled appointment",
+      "complaint": "Complaint",
+      "payment": "Payment",
+      "pickup": "Order pickup",
+      "other": "Other"
+    },
+    "phone": "Phone (optional)",
+    "phonePlaceholder": "+1 555 000 0000",
+    "submit": "Get my number",
+    "submitting": "Registering...",
+    "privacyNote": "Your data is only used to manage your turn."
+  },
+  "wait": {
+    "yourNumber": "Your number",
+    "currentNumber": "Now serving",
+    "position": "Position in queue",
+    "positionValue": "{position} of {total}",
+    "estimatedWait": "Estimated wait",
+    "estimatedWaitValue": "{minutes} min",
+    "statusActive": "Service active",
+    "statusPaused": "Service paused",
+    "statusClosed": "Service closed",
+    "pausedMessage": "Service is temporarily paused. We'll be back shortly.",
+    "noWait": "Almost there!",
+    "youAreNext": "You're next!",
+    "yourTurn": "It's your turn!",
+    "yourTurnSub": "Please proceed to the counter now.",
+    "dismiss": "Got it",
+    "served": "You've been served",
+    "servedSub": "Thank you for your visit.",
+    "joinAgain": "Get another number",
+    "backToHome": "Back to home",
+    "local": {
+      "title": "Location details",
+      "address": "Address",
+      "hours": "Hours",
+      "phone": "Business phone",
+      "viewMap": "View on Google Maps"
+    }
+  },
+  "admin": {
+    "title": "Management panel",
+    "queue": "Active queue",
+    "emptyQueue": "No customers waiting",
+    "emptyQueueSub": "New customers will appear here",
+    "serveNext": "Serve next",
+    "pause": "Pause service",
+    "resume": "Resume service",
+    "clearQueue": "Clear queue",
+    "clearQueueConfirm": "Are you sure you want to remove all waiting tickets?",
+    "clearQueueWarning": "This action cannot be undone.",
+    "history": "Service history",
+    "noHistory": "No one has been served yet",
+    "simulation": "Auto simulation",
+    "simulationOn": "Simulation active",
+    "simulationOff": "Simulation paused",
+    "currentlyServing": "Currently serving",
+    "noCurrentTicket": "No customers",
+    "exportCsv": "Export CSV",
+    "metrics": {
+      "waiting": "Waiting",
+      "servedToday": "Served today",
+      "avgTime": "Avg. time",
+      "peakHour": "Peak hour"
+    },
+    "ticket": {
+      "number": "No.",
+      "name": "Customer",
+      "anonymous": "Anonymous",
+      "reason": "Reason",
+      "wait": "Wait",
+      "status": "Status",
+      "joinedAt": "Joined",
+      "servedAt": "Served",
+      "actions": "Actions",
+      "cancel": "Cancel turn",
+      "cancelConfirm": "Cancel this turn?"
+    },
+    "nav": {
+      "queue": "Queue",
+      "metrics": "Metrics",
+      "history": "History"
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "peakChart": "Customer distribution by hour",
+    "avgServiceTime": "Service time evolution",
+    "satisfactionEstimate": "Estimated satisfaction",
+    "totalTickets": "Total tickets today"
+  },
+  "errors": {
+    "ticketNotFound": "This ticket doesn't exist or has expired.",
+    "queueClosed": "Service is not available at this time.",
+    "generic": "Something went wrong. Please try again."
+  },
+  "notifications": {
+    "enable": "Enable notifications",
+    "enabled": "Notifications enabled",
+    "disabled": "Notifications disabled",
+    "requestTitle": "Enable notifications?",
+    "requestMessage": "We'll notify you when it's your turn.",
+    "turnTitle": "It's your turn!",
+    "turnBody": "{name}, please proceed to the counter now."
+  }
+}

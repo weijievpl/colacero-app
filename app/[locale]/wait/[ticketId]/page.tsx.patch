@@ -1,0 +1,14 @@
+--- a/page.tsx
++++ b/page.tsx
+@@ -1,5 +1,12 @@
+ 'use client';
+ 
++import { LOCALES } from '@/lib/constants';
++
++export function generateStaticParams() {
++  // Return empty array - this page is fully client-side rendered
++  // All ticket IDs are dynamic and stored in browser state
++  return [];
++}
++
+ import { useEffect, useState, useCallback } from 'react';
