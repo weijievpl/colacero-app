@@ -1,17 +1,17 @@
 'use client';
-// Required: Uses Zustand store and client-side state
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { Plus, MoreHorizontal, Play, Pause, Trash2, FlaskConical } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { TopBar } from '@/components/shared/TopBar';
+import { BottomSheet } from '@/components/mobile/BottomSheet';
+import { FAB } from '@/components/mobile/FAB';
 import { StatsGrid } from '@/components/admin/StatsGrid';
 import { QueuePanel } from '@/components/admin/QueuePanel';
 import { ServeButton } from '@/components/admin/ServeButton';
-import { PauseToggle } from '@/components/admin/PauseToggle';
-import { ClearQueueDialog } from '@/components/admin/ClearQueueDialog';
-import { SimulationToggle } from '@/components/admin/SimulationToggle';
 import { CurrentNumberDisplay } from '@/components/admin/CurrentNumberDisplay';
 import { ServiceHistory } from '@/components/admin/ServiceHistory';
 import { useQueueStore } from '@/lib/store/queueStore';
@@ -21,16 +21,20 @@ export default function DashboardPage() {
   const params = useParams();
   const locale = (params?.locale as string) || 'es';
   const t = useTranslations();
+  const [actionsOpen, setActionsOpen] = useState(false);
   
   const initializeWithMockData = useQueueStore((s) => s.initializeWithMockData);
   const tickets = useQueueStore((s) => s.tickets);
   const history = useQueueStore((s) => s.history);
+  const isPaused = useQueueStore((s) => s.isPaused);
+  const pauseQueue = useQueueStore((s) => s.pauseQueue);
+  const resumeQueue = useQueueStore((s) => s.resumeQueue);
+  const clearQueue = useQueueStore((s) => s.clearQueue);
+  const toggleSimulation = useQueueStore((s) => s.toggleSimulation);
+  const simulationActive = useQueueStore((s) => s.simulationActive);
 
-  // Initialize mock data if empty
   useEffect(() => {
-    if (tickets.length === 0 && history.length === 0) {
-      initializeWithMockData();
-    }
+    if (tickets.length === 0 && history.length === 0) initializeWithMockData();
   }, [tickets.length, history.length, initializeWithMockData]);
 
   const reasonLabels: Record<TicketReason, string> = {
@@ -47,126 +51,124 @@ export default function DashboardPage() {
       <TopBar />
       
       <main className="px-4 pb-24 pt-4 md:container md:mx-auto md:px-4 md:pb-16 md:pt-6">
-        {/* Header */}
-        <div className="mb-4 flex flex-col gap-3 md:mb-6 md:flex-row md:items-center md:justify-between">
+        {/* Compact Header */}
+        <div className="mb-4 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-foreground md:text-2xl">{t('admin.title')}</h1>
-            <Badge variant="secondary" className="mt-1 text-xs">{t('common.demo')}</Badge>
+            <h1 className="text-lg font-bold md:text-2xl">{t('admin.title')}</h1>
+            <Badge variant="secondary" className="text-[10px]">{t('common.demo')}</Badge>
           </div>
-          
-          {/* Action Buttons - hidden on mobile, shown in bottom sheet or FAB */}
-          <div className="hidden flex-wrap items-center gap-3 md:flex">
-            <PauseToggle
-              pauseLabel={t('admin.pause')}
-              resumeLabel={t('admin.resume')}
-            />
-            <ClearQueueDialog
-              buttonLabel={t('admin.clearQueue')}
-              title={t('admin.clearQueueConfirm')}
-              description={t('admin.clearQueueWarning')}
-              cancelLabel={t('common.cancel')}
-              confirmLabel={t('common.confirm')}
-            />
+          {/* Desktop actions */}
+          <div className="hidden items-center gap-2 md:flex">
+            <Button variant="outline" size="sm" onClick={() => isPaused ? resumeQueue() : pauseQueue()}>
+              {isPaused ? <Play className="mr-1 h-4 w-4" /> : <Pause className="mr-1 h-4 w-4" />}
+              {isPaused ? t('admin.resume') : t('admin.pause')}
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => clearQueue()}>
+              <Trash2 className="mr-1 h-4 w-4" />
+              {t('admin.clearQueue')}
+            </Button>
+          </div>
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setActionsOpen(true)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted active:bg-muted/80 md:hidden"
+          >
+            <MoreHorizontal className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Stats - compact 2x2 on mobile */}
+        <div className="mb-4">
+          <StatsGrid labels={{
+            waiting: t('admin.metrics.waiting'),
+            servedToday: t('admin.metrics.servedToday'),
+            avgTime: t('admin.metrics.avgTime'),
+            peakHour: t('admin.metrics.peakHour'),
+          }} />
+        </div>
+
+        {/* Current Number + Serve - stacked on mobile */}
+        <div className="mb-4 grid gap-3 md:grid-cols-2 md:gap-4">
+          <CurrentNumberDisplay
+            title={t('admin.currentlyServing')}
+            noTicketLabel={t('admin.noCurrentTicket')}
+          />
+          <div className="flex items-center">
+            <ServeButton label={t('admin.serveNext')} />
           </div>
         </div>
 
-        {/* Mobile Action Bar - compact horizontal scroll */}
-        <div className="mb-4 flex gap-2 overflow-x-auto no-scrollbar pb-1 md:hidden">
-          <PauseToggle
-            pauseLabel={t('admin.pause')}
-            resumeLabel={t('admin.resume')}
-          />
-          <ClearQueueDialog
-            buttonLabel={t('admin.clearQueue')}
-            title={t('admin.clearQueueConfirm')}
-            description={t('admin.clearQueueWarning')}
-            cancelLabel={t('common.cancel')}
-            confirmLabel={t('common.confirm')}
-          />
-          <SimulationToggle
-            label={t('admin.simulation')}
-            onLabel={t('admin.simulationOn')}
-            offLabel={t('admin.simulationOff')}
-          />
-        </div>
-
-        {/* Stats Grid - 2 cols on mobile, 4 on desktop */}
-        <div className="mb-4 md:mb-6">
-          <StatsGrid
+        {/* Queue Panel */}
+        <div className="mb-4">
+          <QueuePanel
             labels={{
-              waiting: t('admin.metrics.waiting'),
-              servedToday: t('admin.metrics.servedToday'),
-              avgTime: t('admin.metrics.avgTime'),
-              peakHour: t('admin.metrics.peakHour'),
-            }}
-          />
-        </div>
-
-        {/* Serve Button - prominent on mobile */}
-        <div className="mb-4 md:hidden">
-          <ServeButton label={t('admin.serveNext')} />
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid gap-4 md:gap-6 lg:grid-cols-3">
-          {/* Queue Panel */}
-          <div className="lg:col-span-2">
-            <QueuePanel
-              labels={{
-                title: t('admin.queue'),
-                empty: t('admin.emptyQueue'),
-                emptySub: t('admin.emptyQueueSub'),
-                anonymous: t('admin.ticket.anonymous'),
-                cancel: t('admin.ticket.cancel'),
-                reasons: reasonLabels,
-              }}
-              locale={locale}
-            />
-          </div>
-
-          {/* Right Column - stacked on mobile */}
-          <div className="space-y-4 md:space-y-6">
-            {/* Current Number */}
-            <CurrentNumberDisplay
-              title={t('admin.currentlyServing')}
-              noTicketLabel={t('admin.noCurrentTicket')}
-            />
-            {/* Serve Button - desktop only (mobile has it above) */}
-            <div className="hidden md:block">
-              <ServeButton label={t('admin.serveNext')} />
-            </div>
-            {/* Simulation Toggle - desktop only (mobile has it in action bar) */}
-            <div className="hidden md:block">
-              <SimulationToggle
-                label={t('admin.simulation')}
-                onLabel={t('admin.simulationOn')}
-                offLabel={t('admin.simulationOff')}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Service History */}
-        <div className="mt-4 md:mt-6">
-          <ServiceHistory
-            labels={{
-              title: t('admin.history'),
-              empty: t('admin.noHistory'),
-              exportCsv: t('admin.exportCsv'),
-              columns: {
-                number: t('admin.ticket.number'),
-                name: t('admin.ticket.name'),
-                reason: t('admin.ticket.reason'),
-                joinedAt: t('admin.ticket.joinedAt'),
-                servedAt: t('admin.ticket.servedAt'),
-              },
+              title: t('admin.queue'),
+              empty: t('admin.emptyQueue'),
+              emptySub: t('admin.emptyQueueSub'),
               anonymous: t('admin.ticket.anonymous'),
+              cancel: t('admin.ticket.cancel'),
               reasons: reasonLabels,
             }}
             locale={locale}
           />
         </div>
+
+        {/* Service History */}
+        <ServiceHistory
+          labels={{
+            title: t('admin.history'),
+            empty: t('admin.noHistory'),
+            exportCsv: t('admin.exportCsv'),
+            columns: {
+              number: t('admin.ticket.number'),
+              name: t('admin.ticket.name'),
+              reason: t('admin.ticket.reason'),
+              joinedAt: t('admin.ticket.joinedAt'),
+              servedAt: t('admin.ticket.servedAt'),
+            },
+            anonymous: t('admin.ticket.anonymous'),
+            reasons: reasonLabels,
+          }}
+          locale={locale}
+        />
       </main>
+
+      {/* Mobile FAB - quick serve */}
+      <FAB
+        icon={<Plus className="h-6 w-6" />}
+        onClick={() => {}}
+        label="Quick action"
+      />
+
+      {/* Mobile Actions Bottom Sheet */}
+      <BottomSheet isOpen={actionsOpen} onClose={() => setActionsOpen(false)} title={t('admin.title')}>
+        <div className="space-y-3">
+          <Button
+            variant="outline"
+            className="w-full justify-start gap-3 h-12"
+            onClick={() => { isPaused ? resumeQueue() : pauseQueue(); setActionsOpen(false); }}
+          >
+            {isPaused ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
+            {isPaused ? t('admin.resume') : t('admin.pause')}
+          </Button>
+          <Button
+            variant="outline"
+            className="w-full justify-start gap-3 h-12"
+            onClick={() => { toggleSimulation(); setActionsOpen(false); }}
+          >
+            <FlaskConical className="h-5 w-5" />
+            {simulationActive ? t('admin.simulationOn') : t('admin.simulationOff')}
+          </Button>
+          <Button
+            variant="destructive"
+            className="w-full justify-start gap-3 h-12"
+            onClick={() => { clearQueue(); setActionsOpen(false); }}
+          >
+            <Trash2 className="h-5 w-5" />
+            {t('admin.clearQueue')}
+          </Button>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

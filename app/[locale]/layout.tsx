@@ -52,6 +52,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'ColaCero - La cola que no se nota',
   description: 'Sistema de gestión de colas en tiempo real.',
+  manifest: '/manifest.json',
   icons: {
     icon: '/assets/images/colacero-logo.png',
     apple: '/assets/images/colacero-logo.png',

@@ -1,5 +1,4 @@
 'use client';
-// Required: Uses Zustand store and client-side navigation
 
 import { useEffect } from 'react';
 import Link from 'next/link';
@@ -7,7 +6,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ArrowRight, Users, CheckCircle, Clock } from 'lucide-react';
+import { ArrowRight, Users, Clock, Bell, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,150 +23,132 @@ export default function LandingPage() {
   const initializeWithMockData = useQueueStore((s) => s.initializeWithMockData);
   const tickets = useQueueStore((s) => s.tickets);
 
-  // Initialize mock data on first load
   useEffect(() => {
-    if (tickets.length === 0) {
-      initializeWithMockData();
-    }
+    if (tickets.length === 0) initializeWithMockData();
   }, [tickets.length, initializeWithMockData]);
 
   return (
     <div className="min-h-[100dvh] bg-background">
       <TopBar />
       
-      <main className="px-4 pb-24 pt-6 md:container md:mx-auto md:px-4 md:pb-16 md:pt-16">
-        {/* Hero Section */}
-        <motion.div 
-          className="mx-auto max-w-4xl text-center"
+      <main className="px-4 pb-24 pt-4 md:container md:mx-auto md:px-4 md:pb-16 md:pt-12">
+        {/* Hero Card - Full width mobile-first */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
+          className="mb-6 overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-blue-700 p-6 text-white shadow-xl md:rounded-2xl md:p-10"
         >
-          {/* Logo */}
-          <div className="mb-6 flex justify-center md:mb-8">
+          <div className="mb-4 flex items-center gap-3">
             <Image
               src="/assets/images/colacero-logo.png"
               alt="ColaCero"
-              width={280}
-              height={80}
-              className="h-12 w-auto md:h-20"
+              width={120}
+              height={32}
+              className="h-8 w-auto brightness-0 invert md:h-10"
               priority
             />
           </div>
-
-          <h1 className="mb-3 text-balance text-3xl font-bold tracking-tight text-foreground md:mb-4 md:text-6xl">
+          
+          <h1 className="mb-2 text-2xl font-bold leading-tight md:text-4xl">
             {t('landing.hero')}
           </h1>
-          
-          <p className="mb-6 text-pretty text-base text-muted-foreground md:mb-8 md:text-xl">
+          <p className="mb-6 text-sm text-blue-100 md:text-lg">
             {t('landing.subtitle')}
           </p>
 
-          {/* Status Badge */}
-          <div className="mb-6 flex justify-center md:mb-8">
-            <Badge 
-              variant={isPaused ? 'secondary' : 'default'}
-              className={`gap-2 px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-sm ${
-                isPaused 
-                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' 
-                  : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-              }`}
-            >
-              <span className={`h-1.5 w-1.5 rounded-full md:h-2 md:w-2 ${isPaused ? 'bg-yellow-500' : 'bg-green-500'}`} />
-              {isPaused ? t('landing.servicePaused') : t('landing.serviceActive')}
-            </Badge>
+          {/* Live status pill */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 text-xs backdrop-blur md:text-sm">
+            <span className={`h-2 w-2 rounded-full ${isPaused ? 'bg-yellow-300' : 'bg-green-300 animate-pulse'}`} />
+            {isPaused ? t('landing.servicePaused') : t('landing.serviceActive')}
+            <span className="mx-1 text-white/40">•</span>
+            <Users className="h-3 w-3" />
+            <span className="font-semibold">{waitingCount}</span> {t('landing.waitingNow')}
           </div>
 
-          {/* Waiting Count */}
-          <Card className="mx-auto mb-6 max-w-xs border-2 border-primary/20 bg-card/50 backdrop-blur md:mb-8">
-            <CardContent className="flex items-center justify-center gap-3 p-3 md:p-4">
-              <Users className="h-4 w-4 text-primary md:h-5 md:w-5" aria-hidden="true" />
-              <span className="text-base font-medium md:text-lg">
-                <span className="text-xl font-bold text-primary md:text-2xl">{waitingCount}</span>
-                {' '}
-                {t('landing.waitingNow')}
-              </span>
-            </CardContent>
-          </Card>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-            <Button 
-              asChild 
-              size="lg" 
-              className="w-full gap-2 bg-primary px-8 text-lg hover:bg-primary/90 sm:w-auto"
-            >
-              <Link href={`/${locale}/join`}>
-                {t('navigation.customer')}
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
-              </Link>
-            </Button>
-            
-            <Button 
-              asChild 
-              variant="outline" 
-              size="lg" 
-              className="w-full gap-2 px-8 text-lg sm:w-auto"
-            >
-              <Link href={`/${locale}/dashboard`}>
-                {t('navigation.admin')}
-              </Link>
-            </Button>
-          </div>
+          {/* Primary CTA */}
+          <Button
+            asChild
+            size="lg"
+            className="w-full bg-white text-primary hover:bg-blue-50 md:w-auto md:min-w-[200px]"
+          >
+            <Link href={`/${locale}/join`}>
+              {t('navigation.customer')}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </motion.div>
 
-        {/* Features - Horizontal scroll on mobile, grid on desktop */}
-        <motion.div 
-          className="mx-auto mt-12 flex max-w-4xl gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4 md:mt-24 md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <FeatureCard 
-            icon={<Clock className="h-7 w-7 md:h-8 md:w-8" />}
-            title={locale === 'zh' ? '实时更新' : locale === 'es' ? 'Tiempo real' : 'Real-time'}
-            description={locale === 'zh' ? '随时了解您的排队位置' : locale === 'es' ? 'Conoce tu posición al instante' : 'Know your position instantly'}
+        {/* Quick Actions Grid */}
+        <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          <QuickAction
+            icon={<Clock className="h-5 w-5" />}
+            title={locale === 'zh' ? '实时状态' : 'En vivo'}
+            color="bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300"
           />
-          <FeatureCard 
-            icon={<CheckCircle className="h-7 w-7 md:h-8 md:w-8" />}
-            title={locale === 'zh' ? '即时通知' : locale === 'es' ? 'Notificaciones' : 'Notifications'}
-            description={locale === 'zh' ? '轮到您时立即通知' : locale === 'es' ? 'Te avisamos cuando sea tu turno' : 'We notify you when it\'s your turn'}
+          <QuickAction
+            icon={<Bell className="h-5 w-5" />}
+            title={locale === 'zh' ? '即时通知' : 'Alertas'}
+            color="bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-300"
           />
-          <FeatureCard 
-            icon={<Users className="h-7 w-7 md:h-8 md:w-8" />}
-            title={locale === 'zh' ? '无需排队' : locale === 'es' ? 'Sin esperas' : 'No waiting'}
-            description={locale === 'zh' ? '用手机取号，自由活动' : locale === 'es' ? 'Saca número y muévete libre' : 'Get your number and move freely'}
+          <QuickAction
+            icon={<Users className="h-5 w-5" />}
+            title={locale === 'zh' ? '无需排队' : 'Sin fila'}
+            color="bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-300"
           />
-        </motion.div>
+          <QuickAction
+            icon={<ChevronRight className="h-5 w-5" />}
+            title={locale === 'zh' ? '管理面板' : 'Admin'}
+            href={`/${locale}/dashboard`}
+            color="bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300"
+          />
+        </div>
 
-        {/* Demo Banner */}
-        <div className="mt-8 text-center md:mt-12">
-          <Badge variant="secondary" className="text-xs">
-            {t('common.demo')}
-          </Badge>
+        {/* Feature Cards - Horizontal snap scroll on mobile */}
+        <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+          <FeatureCard
+            emoji="📱"
+            title={locale === 'zh' ? '手机取号' : 'Desde el móvil'}
+            desc={locale === 'zh' ? '扫码或点击即可加入队列' : 'Únete a la cola desde tu teléfono'}
+          />
+          <FeatureCard
+            emoji="⏱️"
+            title={locale === 'zh' ? '实时追踪' : 'Tiempo real'}
+            desc={locale === 'zh' ? '随时查看你的排队位置' : 'Conoce tu posición al instante'}
+          />
+          <FeatureCard
+            emoji="🔔"
+            title={locale === 'zh' ? '智能提醒' : 'Notificaciones'}
+            desc={locale === 'zh' ? '轮到你时自动通知' : 'Te avisamos cuando sea tu turno'}
+          />
+        </div>
+
+        {/* Demo badge */}
+        <div className="mt-6 text-center">
+          <Badge variant="secondary" className="text-xs">{t('common.demo')}</Badge>
         </div>
       </main>
     </div>
   );
 }
 
-function FeatureCard({ 
-  icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ReactNode; 
-  title: string; 
-  description: string;
-}) {
+function QuickAction({ icon, title, color, href }: { icon: React.ReactNode; title: string; color: string; href?: string }) {
+  const content = (
+    <div className={`flex flex-col items-center justify-center gap-2 rounded-2xl p-4 ${color} active:scale-[0.97] transition-transform`}>
+      {icon}
+      <span className="text-xs font-medium md:text-sm">{title}</span>
+    </div>
+  );
+  return href ? <Link href={href}>{content}</Link> : <div>{content}</div>;
+}
+
+function FeatureCard({ emoji, title, desc }: { emoji: string; title: string; desc: string }) {
   return (
-    <Card className="min-w-[260px] shrink-0 snap-center border-border/50 bg-card/50 backdrop-blur md:min-w-0">
-      <CardContent className="flex flex-col items-center p-5 text-center md:p-6">
-        <div className="mb-3 text-primary md:mb-4">
-          {icon}
-        </div>
-        <h3 className="mb-1.5 font-semibold text-foreground md:mb-2">{title}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
+    <Card className="min-w-[240px] shrink-0 snap-center border-border/30 bg-card/80 md:min-w-0">
+      <CardContent className="p-4">
+        <div className="mb-2 text-2xl">{emoji}</div>
+        <h3 className="mb-1 text-sm font-semibold">{title}</h3>
+        <p className="text-xs text-muted-foreground">{desc}</p>
       </CardContent>
     </Card>
   );
