@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 PROJ=/tmp/colacero-webview
+rm -rf $PROJ
 mkdir -p $PROJ/app/src/main/java/com/colacero/app
 mkdir -p $PROJ/app/src/main/res/values
 mkdir -p $PROJ/app/src/main/res/mipmap-hdpi
@@ -92,9 +93,9 @@ cat > $PROJ/app/src/main/res/values/styles.xml << 'STYLE'
 </resources>
 STYLE
 
-# Generate icon with correct path (use double quotes for variable expansion)
 python3 -c "
-import zlib, struct
+import zlib, struct, os
+proj = os.environ.get('PROJ', '/tmp/colacero-webview')
 def create_png():
     sig = b'\x89PNG\r\n\x1a\n'
     ihdr_data = struct.pack('>IIBBBBB', 48, 48, 8, 2, 0, 0, 0)
@@ -109,9 +110,10 @@ def create_png():
     iend_crc = zlib.crc32(b'IEND') & 0xffffffff
     iend = struct.pack('>I', 0) + b'IEND' + struct.pack('>I', iend_crc)
     return sig + ihdr + idat + iend
-with open('${PROJ}/app/src/main/res/mipmap-hdpi/ic_launcher.png', 'wb') as f:
+path = proj + '/app/src/main/res/mipmap-hdpi/ic_launcher.png'
+with open(path, 'wb') as f:
     f.write(create_png())
-print('Icon created at ${PROJ}/app/src/main/res/mipmap-hdpi/ic_launcher.png')
+print('Icon created at ' + path)
 "
 
 cat > $PROJ/build.gradle << 'GRADLE'
@@ -121,7 +123,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.0'
+        classpath 'com.android.tools.build:gradle:8.7.3'
     }
 }
 allprojects {
@@ -160,11 +162,12 @@ printf "rootProject.name = 'ColaCero'\ninclude ':app'\n" > $PROJ/settings.gradle
 echo "android.useAndroidX=true" > $PROJ/gradle.properties
 
 cd $PROJ
-wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip -O /tmp/gradle.zip
+wget -q https://services.gradle.org/distributions/gradle-8.9-bin.zip -O /tmp/gradle.zip
 unzip -qo /tmp/gradle.zip -d /tmp/
-export PATH=$PATH:/tmp/gradle-8.5/bin
-gradle wrapper --gradle-version 8.5
+export PATH=/tmp/gradle-8.9/bin:$PATH
+gradle wrapper --gradle-version 8.9
 chmod +x gradlew
 ./gradlew assembleDebug --no-daemon
+echo "=== APK INFO ==="
 ls -lh app/build/outputs/apk/debug/app-debug.apk
-file app/build/outputs/apk/debug/app-debug.apk
+unzip -l app/build/outputs/apk/debug/app-debug.apk | head -30
