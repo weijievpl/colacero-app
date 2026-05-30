@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
 
         webView.setWebViewClient(new WebViewClient());
         webView.setBackgroundColor(Color.BLACK);
-        webView.loadUrl("https://cola-cero.vercel.app");
+        webView.loadUrl("https://cola-cero-app.vercel.app");
     }
 
     @Override
