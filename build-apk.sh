@@ -92,6 +92,7 @@ cat > $PROJ/app/src/main/res/values/styles.xml << 'STYLE'
 </resources>
 STYLE
 
+# Generate icon with correct path (use double quotes for variable expansion)
 python3 -c "
 import zlib, struct
 def create_png():
@@ -108,8 +109,9 @@ def create_png():
     iend_crc = zlib.crc32(b'IEND') & 0xffffffff
     iend = struct.pack('>I', 0) + b'IEND' + struct.pack('>I', iend_crc)
     return sig + ihdr + idat + iend
-with open('$PROJ/app/src/main/res/mipmap-hdpi/ic_launcher.png', 'wb') as f:
+with open('${PROJ}/app/src/main/res/mipmap-hdpi/ic_launcher.png', 'wb') as f:
     f.write(create_png())
+print('Icon created at ${PROJ}/app/src/main/res/mipmap-hdpi/ic_launcher.png')
 "
 
 cat > $PROJ/build.gradle << 'GRADLE'
@@ -165,3 +167,4 @@ gradle wrapper --gradle-version 8.5
 chmod +x gradlew
 ./gradlew assembleDebug --no-daemon
 ls -lh app/build/outputs/apk/debug/app-debug.apk
+file app/build/outputs/apk/debug/app-debug.apk
