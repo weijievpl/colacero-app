@@ -16,7 +16,7 @@ export function TicketHero({ number }: TicketHeroProps) {
       transition={{ type: 'spring', stiffness: 200, damping: 20 }}
     >
       <span 
-        className="font-mono text-7xl font-bold tracking-tight text-primary md:text-9xl"
+        className="font-mono text-6xl font-bold tracking-tight text-primary md:text-9xl"
         aria-label={`Ticket number ${number}`}
       >
         {number.toString().padStart(2, '0')}

@@ -43,19 +43,19 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-[100dvh] bg-background">
       <TopBar />
       
-      <main className="container mx-auto px-4 py-6">
+      <main className="px-4 pb-24 pt-4 md:container md:mx-auto md:px-4 md:pb-16 md:pt-6">
         {/* Header */}
-        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="mb-4 flex flex-col gap-3 md:mb-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{t('admin.title')}</h1>
-            <Badge variant="secondary" className="mt-1">{t('common.demo')}</Badge>
+            <h1 className="text-xl font-bold text-foreground md:text-2xl">{t('admin.title')}</h1>
+            <Badge variant="secondary" className="mt-1 text-xs">{t('common.demo')}</Badge>
           </div>
           
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3">
+          {/* Action Buttons - hidden on mobile, shown in bottom sheet or FAB */}
+          <div className="hidden flex-wrap items-center gap-3 md:flex">
             <PauseToggle
               pauseLabel={t('admin.pause')}
               resumeLabel={t('admin.resume')}
@@ -70,8 +70,28 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="mb-6">
+        {/* Mobile Action Bar - compact horizontal scroll */}
+        <div className="mb-4 flex gap-2 overflow-x-auto no-scrollbar pb-1 md:hidden">
+          <PauseToggle
+            pauseLabel={t('admin.pause')}
+            resumeLabel={t('admin.resume')}
+          />
+          <ClearQueueDialog
+            buttonLabel={t('admin.clearQueue')}
+            title={t('admin.clearQueueConfirm')}
+            description={t('admin.clearQueueWarning')}
+            cancelLabel={t('common.cancel')}
+            confirmLabel={t('common.confirm')}
+          />
+          <SimulationToggle
+            label={t('admin.simulation')}
+            onLabel={t('admin.simulationOn')}
+            offLabel={t('admin.simulationOff')}
+          />
+        </div>
+
+        {/* Stats Grid - 2 cols on mobile, 4 on desktop */}
+        <div className="mb-4 md:mb-6">
           <StatsGrid
             labels={{
               waiting: t('admin.metrics.waiting'),
@@ -82,8 +102,13 @@ export default function DashboardPage() {
           />
         </div>
 
+        {/* Serve Button - prominent on mobile */}
+        <div className="mb-4 md:hidden">
+          <ServeButton label={t('admin.serveNext')} />
+        </div>
+
         {/* Main Content Grid */}
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-4 md:gap-6 lg:grid-cols-3">
           {/* Queue Panel */}
           <div className="lg:col-span-2">
             <QueuePanel
@@ -99,28 +124,30 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-6">
+          {/* Right Column - stacked on mobile */}
+          <div className="space-y-4 md:space-y-6">
             {/* Current Number */}
             <CurrentNumberDisplay
               title={t('admin.currentlyServing')}
               noTicketLabel={t('admin.noCurrentTicket')}
             />
-
-            {/* Serve Button */}
-            <ServeButton label={t('admin.serveNext')} />
-
-            {/* Simulation Toggle */}
-            <SimulationToggle
-              label={t('admin.simulation')}
-              onLabel={t('admin.simulationOn')}
-              offLabel={t('admin.simulationOff')}
-            />
+            {/* Serve Button - desktop only (mobile has it above) */}
+            <div className="hidden md:block">
+              <ServeButton label={t('admin.serveNext')} />
+            </div>
+            {/* Simulation Toggle - desktop only (mobile has it in action bar) */}
+            <div className="hidden md:block">
+              <SimulationToggle
+                label={t('admin.simulation')}
+                onLabel={t('admin.simulationOn')}
+                offLabel={t('admin.simulationOff')}
+              />
+            </div>
           </div>
         </div>
 
         {/* Service History */}
-        <div className="mt-6">
+        <div className="mt-4 md:mt-6">
           <ServiceHistory
             labels={{
               title: t('admin.history'),

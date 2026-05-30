@@ -17,8 +17,8 @@ export function TopBar({ showLogo = true, showNav = false }: TopBarProps) {
   const locale = (params?.locale as string) || 'es';
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto flex h-14 items-center justify-between px-4 md:h-16">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md pt-[env(safe-area-inset-top,0px)] md:border-b">
+      <div className="flex h-14 items-center justify-between px-4 md:container md:mx-auto md:h-16 md:px-4">
         {/* Logo */}
         {showLogo && (
           <Link 
@@ -31,14 +31,14 @@ export function TopBar({ showLogo = true, showNav = false }: TopBarProps) {
               alt="ColaCero"
               width={180}
               height={40}
-              className="h-8 w-auto md:h-10"
+              className="h-7 w-auto md:h-10"
               priority
             />
           </Link>
         )}
 
         {/* Right side controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 md:gap-2">
           <LanguageSwitcher />
           <ThemeToggle />
         </div>

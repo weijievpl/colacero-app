@@ -84,12 +84,12 @@ export default function WaitPage() {
 
   if (notFound) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-[100dvh] bg-background">
         <TopBar />
-        <main className="container mx-auto flex flex-col items-center justify-center px-4 py-16">
+        <main className="flex flex-col items-center justify-center px-4 pb-24 pt-8 md:container md:mx-auto md:py-16">
           <Card className="w-full max-w-md text-center">
-            <CardContent className="p-8">
-              <h1 className="mb-4 text-xl font-semibold text-foreground">{t('errors.ticketNotFound')}</h1>
+            <CardContent className="p-6 md:p-8">
+              <h1 className="mb-4 text-lg font-semibold text-foreground md:text-xl">{t('errors.ticketNotFound')}</h1>
               <Button asChild><Link href={`/${locale}`}><ArrowLeft className="mr-2 h-4 w-4" />{t('common.back')}</Link></Button>
             </CardContent>
           </Card>
@@ -100,9 +100,9 @@ export default function WaitPage() {
 
   if (!ticket) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-[100dvh] bg-background">
         <TopBar />
-        <main className="container mx-auto flex items-center justify-center px-4 py-16">
+        <main className="flex items-center justify-center px-4 pb-24 pt-8 md:container md:mx-auto md:py-16">
           <div className="text-muted-foreground">{t('common.loading')}</div>
         </main>
       </div>
@@ -111,17 +111,17 @@ export default function WaitPage() {
 
   if (isServed) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-[100dvh] bg-background">
         <TopBar />
-        <main className="container mx-auto flex flex-col items-center justify-center px-4 py-16">
+        <main className="flex flex-col items-center justify-center px-4 pb-24 pt-8 md:container md:mx-auto md:py-16">
           <Card className="w-full max-w-md text-center">
-            <CardContent className="p-8">
-              <div className="mb-6 font-mono text-5xl font-bold text-primary">{ticket.number.toString().padStart(2, '0')}</div>
-              <h1 className="mb-2 text-2xl font-bold text-foreground">{t('wait.served')}</h1>
-              <p className="mb-8 text-muted-foreground">{t('wait.servedSub')}</p>
+            <CardContent className="p-6 md:p-8">
+              <div className="mb-4 font-mono text-5xl font-bold text-primary md:mb-6 md:text-6xl">{ticket.number.toString().padStart(2, '0')}</div>
+              <h1 className="mb-2 text-xl font-bold text-foreground md:text-2xl">{t('wait.served')}</h1>
+              <p className="mb-6 text-sm text-muted-foreground md:mb-8 md:text-base">{t('wait.servedSub')}</p>
               <div className="flex flex-col gap-3">
-                <Button asChild><Link href={`/${locale}/join`}>{t('wait.joinAgain')}</Link></Button>
-                <Button asChild variant="outline"><Link href={`/${locale}`}>{t('wait.backToHome')}</Link></Button>
+                <Button asChild size="lg"><Link href={`/${locale}/join`}>{t('wait.joinAgain')}</Link></Button>
+                <Button asChild variant="outline" size="lg"><Link href={`/${locale}`}>{t('wait.backToHome')}</Link></Button>
               </div>
             </CardContent>
           </Card>
@@ -134,26 +134,26 @@ export default function WaitPage() {
   const estimatedMinutes = msToMinutes(position > 0 ? (position - 1) * avgServiceTimeMs : 0);
 
   return (
-    <div className="min-h-screen bg-background" onClick={handleInteraction}>
+    <div className="min-h-[100dvh] bg-background" onClick={handleInteraction}>
       <TopBar />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mx-auto max-w-md space-y-6">
+      <main className="px-4 pb-24 pt-4 md:container md:mx-auto md:px-4 md:py-8">
+        <div className="mx-auto max-w-md space-y-4 md:space-y-6">
           <ServiceStatusBanner status={isPaused ? 'paused' : 'active'} activeLabel={t('wait.statusActive')} pausedLabel={t('wait.statusPaused')} closedLabel={t('wait.statusClosed')} pausedMessage={isPaused ? t('wait.pausedMessage') : undefined} />
-          <Card className="border-2 border-primary/20 bg-card/80 backdrop-blur">
-            <CardHeader className="pb-2 text-center"><CardTitle className="text-lg text-muted-foreground">{t('wait.yourNumber')}</CardTitle></CardHeader>
-            <CardContent className="pb-8"><TicketHero number={ticket.number} /></CardContent>
+          <Card className="border-2 border-primary/20 bg-card/80 backdrop-blur rounded-2xl">
+            <CardHeader className="pb-2 text-center"><CardTitle className="text-base text-muted-foreground md:text-lg">{t('wait.yourNumber')}</CardTitle></CardHeader>
+            <CardContent className="pb-6 md:pb-8"><TicketHero number={ticket.number} /></CardContent>
           </Card>
-          <Card className="bg-secondary/30">
+          <Card className="bg-secondary/30 rounded-2xl">
             <CardContent className="flex items-center justify-between p-4">
-              <span className="text-muted-foreground">{t('wait.currentNumber')}</span>
-              <span className="font-mono text-2xl font-bold text-foreground" aria-live="polite">{currentNumber > 0 ? currentNumber.toString().padStart(2, '0') : '--'}</span>
+              <span className="text-sm text-muted-foreground md:text-base">{t('wait.currentNumber')}</span>
+              <span className="font-mono text-2xl font-bold text-foreground md:text-3xl" aria-live="polite">{currentNumber > 0 ? currentNumber.toString().padStart(2, '0') : '--'}</span>
             </CardContent>
           </Card>
-          <Card><CardContent className="p-4"><PositionTracker position={position} total={waitingCount} label={t('wait.position')} valueLabel={t('wait.positionValue', { position, total: waitingCount })} /></CardContent></Card>
+          <Card className="rounded-2xl"><CardContent className="p-4"><PositionTracker position={position} total={waitingCount} label={t('wait.position')} valueLabel={t('wait.positionValue', { position, total: waitingCount })} /></CardContent></Card>
           <WaitEstimate minutes={estimatedMinutes} label={t('wait.estimatedWait')} valueLabel={position === 1 ? t('wait.youAreNext') : t('wait.estimatedWaitValue', { minutes: estimatedMinutes })} />
-          <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-base">{t('wait.local.title')}</CardTitle></CardHeader>
-            <CardContent className="space-y-2 text-sm">
+          <Card className="rounded-2xl">
+            <CardHeader className="pb-2"><CardTitle className="text-sm md:text-base">{t('wait.local.title')}</CardTitle></CardHeader>
+            <CardContent className="space-y-2 text-xs md:text-sm">
               <div><span className="text-muted-foreground">{t('wait.local.address')}: </span><span>{BUSINESS_INFO.address}</span></div>
               <div><span className="text-muted-foreground">{t('wait.local.phone')}: </span><span>{BUSINESS_INFO.phone}</span></div>
               <a href={`https://www.google.com/maps/search/?api=1&query=${BUSINESS_INFO.coordinates.lat},${BUSINESS_INFO.coordinates.lng}`} target="_blank" rel="noopener noreferrer" className="inline-block text-primary hover:underline">{t('wait.local.viewMap')}</a>

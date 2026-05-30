@@ -157,3 +157,39 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ===== Mobile-Native Enhancements ===== */
+@supports (padding-top: env(safe-area-inset-top)) {
+  :root {
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
+    --safe-left: env(safe-area-inset-left);
+    --safe-right: env(safe-area-inset-right);
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
+  body {
+    @apply overscroll-none;
+    padding-top: var(--safe-top, 0px);
+    padding-bottom: var(--safe-bottom, 0px);
+  }
+
+  /* Hide scrollbar for horizontal scroll areas */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Pull-to-refresh spinner */
+@keyframes pull-refresh-spin {
+  to { transform: rotate(360deg); }
+}
+.animate-pull-refresh {
+  animation: pull-refresh-spin 0.8s linear infinite;
+}

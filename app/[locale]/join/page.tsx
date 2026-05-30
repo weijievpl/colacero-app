@@ -7,14 +7,14 @@ export default function JoinPage() {
   const t = useTranslations('join');
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-[100dvh] bg-background">
       <TopBar />
       
-      <main className="container mx-auto px-4 py-8 md:py-16">
-        <Card className="mx-auto max-w-md border-border/50 bg-card/80 backdrop-blur">
+      <main className="px-4 pb-24 pt-4 md:container md:mx-auto md:px-4 md:pb-16 md:pt-16">
+        <Card className="mx-auto max-w-md border-border/50 bg-card/80 backdrop-blur md:border md:shadow-sm">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">{t('title')}</CardTitle>
-            <CardDescription className="text-base">{t('subtitle')}</CardDescription>
+            <CardTitle className="text-xl font-bold md:text-2xl">{t('title')}</CardTitle>
+            <CardDescription className="text-sm md:text-base">{t('subtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
             <JoinForm />
